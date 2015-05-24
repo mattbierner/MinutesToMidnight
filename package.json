@@ -1,0 +1,24 @@
+{
+    "name": "minutes-to-midnight",
+    "version": "0.0.0",
+    "description": "Doomsday Clock API",
+    "author": "Matt Bierner",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/mattbierner/minutestomidnight.git"
+    },
+    "keywords": [
+       "doomsday clock",
+       "doomsday",
+       "minutes to midnight"],
+    
+    "main": "index.js",
+    
+    "dependencies": {
+        "feedparser": "1.1.x",
+        "request": "2.55.x",
+        "extend": "2.0.x",
+        "bluebird": "2.9.x"
+    }
+}
