@@ -4,17 +4,17 @@ Small Node/Javascript library to get the current time on the [Doomsday clock][] 
 
 ## Usage
 
-```
+```bash
 $ npm install minutes-to-midnight
 ```
 
-```
+```js
 var M2M = require('minutes-to-midnight');
 ```
 
-APIs return [Bluebird][] promises.
+APIs return promises.
 
-```
+```js
 // Get number of minutes to midnight
 new M2M().get()
     .then(console.log) 
@@ -22,7 +22,7 @@ new M2M().get()
 // 3 
 ```
 
-```
+```js
 // Get current time on the Doomsday Clock.
 new M2M().getTime()
     .then(console.log)
@@ -32,5 +32,3 @@ new M2M().getTime()
 
 [Doomsday clock]: http://en.wikipedia.org/wiki/Doomsday_Clock
 [bulletin]: http://thebulletin.org
-
-[bluebird]: https://github.com/petkaantonov/bluebird
