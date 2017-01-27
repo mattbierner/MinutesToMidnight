@@ -16,7 +16,25 @@ const pad = (min, input) => {
 }
 
 const dateToString = (d) =>
-    pad(2, d.getHours() - 12) + ':' + pad(2, d.getMinutes()) + ' PM'
+    pad(2, d.getHours() - 12)
+        + ':' + pad(2, d.getMinutes())
+        + (d.getSeconds() ?':' + pad(2, d.getSeconds()) : '')
+        + ' PM'
+
+const numberStringToInt = value => {
+    switch (value.toLowerCase()) {
+        case 'one': return 1;
+        case 'two': return 2;
+        case 'three': return 3;
+        case 'four': return 4;
+        case 'five': return 5;
+        case 'six': return 6;
+        case 'seven': return 7;
+        case 'eight': return 8;
+        case 'nine': return 9;
+    }
+    return NaN;
+}
 
 /**
  * Default configuration.
@@ -37,7 +55,7 @@ const DEFAULTS = {
     /**
      * RegEx to extract minutes to midnight.
      */
-    title: /(\d+) minutes to midnight/i
+    title: /(?:(\d+)|(one|two|three|four|five|six|seven|eight|nine)(.*?half)) minutes to midnight/i
 }
 
 /**
@@ -76,8 +94,15 @@ M2M.prototype._extract = function (data) {
         const nodes = $(conf.selector).map(function () { return $(this).text() }).get()
         for (const node of nodes) {
             const result = node.match(conf.title)
-            if (result)
-                return resolve(parseInt(result[1]))
+            if (result) {
+                if (!isNaN(result[1]))
+                    return resolve(parseInt(result[1]))
+                if (result[2]) {
+                    const whole = numberStringToInt(result[2])
+                    if (!isNaN(whole)) 
+                        return resolve(whole + 0.5)
+                }
+            }
         }
         reject("No result found")
     })
