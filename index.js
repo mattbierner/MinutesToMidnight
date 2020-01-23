@@ -1,129 +1,39 @@
-"use strict"
-const request = require('request')
-const extend = require('extend')
-const cheerio = require('cheerio')
+// @ts-check
+"use strict";
 
-const midnight = new Date(2000, 0, 0, 0, 0, 0, 0)
-
-const toTime = mins =>
-    new Date(midnight.getTime() + mins * -60000)
-
-const pad = (min, input) => {
-    const out = input + ''
-    while (out.length < min)
-        out = '0' + out
-    return out
-}
-
-const dateToString = (d) =>
-    pad(2, d.getHours() - 12)
-        + ':' + pad(2, d.getMinutes())
-        + (d.getSeconds() ?':' + pad(2, d.getSeconds()) : '')
-        + ' PM'
-
-const numberStringToInt = value => {
-    switch (value.toLowerCase()) {
-        case 'one': return 1;
-        case 'two': return 2;
-        case 'three': return 3;
-        case 'four': return 4;
-        case 'five': return 5;
-        case 'six': return 6;
-        case 'seven': return 7;
-        case 'eight': return 8;
-        case 'nine': return 9;
-    }
-    return NaN;
-}
-
-/**
- * Default configuration.
- */
-const DEFAULTS = {
+module.exports = {
     /**
-     * Where to get page with m2m data from.
-     * 
-     * Doesn't seem to be a good public api for this
+     * @return Second to midnight as a number.
      */
-    source: "http://thebulletin.org/timeline",
+    getSeconds() {
+        return 100;
+    },
 
     /**
-     * Selector for dom element.
+     * @return Minutes to midnight as a whole number.
      */
-    selector: '.view-content .node-title',
+    getMinutes() {
+        return Math.floor(this.getSeconds() / 60);
+    },
 
     /**
-     * RegEx to extract minutes to midnight.
+     * @return Minutes to midnight as a fractional number.
      */
-    title: /(?:(\d+)|(one|two|three|four|five|six|seven|eight|nine)(.*?half)) minutes to midnight/i
-}
+    getFractionalMinutes() {
+        return this.getSeconds() / 60;
+    },
 
-/**
- * Minutes to midnight.
- */
-const M2M = function (conf) {
-    this.conf = extend(DEFAULTS, (conf || {}))
-}
+    /**
+     * @return Time to midnight as a display string.
+     */
+    getTimeToMidnight() {
+        return '100 seconds';
+    },
 
-/**
- * Request the current minutes to midnight feed.
- * 
- * Also contains a bunch of unrelated other posts.
- */
-M2M.prototype._request = function () {
-    const conf = this.conf
-    return new Promise((resolve, reject) =>
-        request(conf.source, function (error, response, body) {
-            if (error)
-                return reject(err);
-            if (response.statusCode !== 200)
-                return reject("Unexpected status code")
-            return resolve(body)
-        }))
-}
-
-/**
- * Given a feedparser result, extract the number of minutes to midnight.
- * 
- * Uses a best guess based on post title.
- */
-M2M.prototype._extract = function (data) {
-    const conf = this.conf;
-    return new Promise((resolve, reject) => {
-        const $ = cheerio.load(data)
-        const nodes = $(conf.selector).map(function () { return $(this).text() }).get()
-        for (const node of nodes) {
-            const result = node.match(conf.title)
-            if (result) {
-                if (!isNaN(result[1]))
-                    return resolve(parseInt(result[1]))
-                if (result[2]) {
-                    const whole = numberStringToInt(result[2])
-                    if (!isNaN(whole)) 
-                        return resolve(whole + 0.5)
-                }
-            }
-        }
-        reject("No result found")
-    })
-}
-
-/**
- * Get the current number of minutes to midnight as an integer.
- */
-M2M.prototype.get = function () {
-    return this._request()
-        .then(this._extract.bind(this))
-}
-
-/**
- * Get the current time as a string on the doomsday clock.
- * 
- * Formatted as: 11:XX PM
- */
-M2M.prototype.getTime = function () {
-    return this.get()
-        .then(x => dateToString(toTime(x)))
-}
-
-module.exports = M2M
+    /**
+     * @return Current time as a display string;
+     */
+    getTime() {
+        return '11:58:20 PM';
+    },
+};

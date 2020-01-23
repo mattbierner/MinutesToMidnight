@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2016",
+        "checkJs": true,
+        "declaration": true,
+        "noEmit": false,
+        "declarationDir": "types",
+        "emitDeclarationOnly": true
+    },
+    "include": [
+      "index.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+} 

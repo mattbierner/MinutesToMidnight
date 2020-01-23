@@ -1,22 +1,28 @@
 {
   "name": "minutes-to-midnight",
-  "version": "0.2.0",
-  "description": "Doomsday Clock API",
+  "version": "1.0.0",
+  "description": "Doomsday Clock",
   "author": "Matt Bierner",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/mattbierner/minutestomidnight.git"
   },
+  "files": [
+    "index.js"
+  ],
+  "types": "types/index.d.ts",
   "keywords": [
     "doomsday clock",
     "doomsday",
     "minutes to midnight"
   ],
   "main": "index.js",
-  "dependencies": {
-    "cheerio": "^0.22.0",
-    "extend": "2.0.x",
-    "request": "^2.79.0"
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "generate-types": "tsc -p jsconfig.json"
   }
 }

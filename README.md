@@ -1,6 +1,6 @@
 # Minutes to Midnight
 
-Small Node/Javascript library to get the current time on the [Doomsday clock][] from the [Bulletin of the Atomic Scientists][bulletin].
+Very small Node/Javascript library with the current time on the [Doomsday clock][] from the [Bulletin of the Atomic Scientists][bulletin].
 
 ## Usage
 
@@ -9,25 +9,14 @@ $ npm install minutes-to-midnight
 ```
 
 ```js
-var M2M = require('minutes-to-midnight');
-```
+const m2m = require('minutes-to-midnight');
 
-APIs return promises.
+m2m.getSeconds(); // 100 (number)
+m2m.getMinutes(); // 1 (number)
+m2m.getFractionalMinutes(); // 1.6666666666666667 (number)
 
-```js
-// Get number of minutes to midnight
-new M2M().get()
-    .then(console.log) 
-    .catch(console.error);
-// 3 
-```
-
-```js
-// Get current time on the Doomsday Clock.
-new M2M().getTime()
-    .then(console.log)
-    .catch(console.error);
-// 11:57 PM
+m2m.getTimeToMidnight(); // '100 seconds' (string)
+m2m..getTime(); // '11:58:20 PM' (string)
 ```
 
 [Doomsday clock]: http://en.wikipedia.org/wiki/Doomsday_Clock
