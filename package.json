@@ -9,7 +9,8 @@
     "url": "git://github.com/mattbierner/minutestomidnight.git"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
   "types": "types/index.d.ts",
   "keywords": [
