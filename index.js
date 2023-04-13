@@ -6,7 +6,7 @@ module.exports = {
      * @return Second to midnight as a number.
      */
     getSeconds() {
-        return 100;
+        return 90;
     },
 
     /**
@@ -27,13 +27,13 @@ module.exports = {
      * @return Time to midnight as a display string.
      */
     getTimeToMidnight() {
-        return '100 seconds';
+        return '90 seconds';
     },
 
     /**
      * @return Current time as a display string;
      */
     getTime() {
-        return '11:58:20 PM';
+        return '11:58:30 PM';
     },
 };
